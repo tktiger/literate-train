@@ -51,12 +51,12 @@ pipeline {
 				}
 			}
 		}
-		//stage("Sonar"){
-		//	steps{
-		//		withSonarQubeEnv('sonarqube'){
-		//			sh "mvn sonar:sonar"
-		//		}
-		//	}
-		//}
+		stage("Sonar"){
+			steps{
+				withSonarQubeEnv('sonarqube'){
+					sh "mvn sonar:sonar"
+				}
+			}
+		}
 	}
 }
