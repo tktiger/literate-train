@@ -85,4 +85,18 @@ class OrderProcessorTest {
         assertTrue(receipt.contains("Total: £9.00"));
     }
 
+    @Test
+    void premium_customer_gets_larger_discount_on_five_items_or_more() {
+        Customer customer = new Customer("Simon", "simon.kay@email.com", "07777777777", CustomerType.PREMIUM);
+        Order order = new Order("ORD-6", customer, "COLLECTION", "CARD");
+        order.addItem(new OrderItem("Book", 10, 1000));
+
+        String receipt = processor.process(order);
+
+        assertTrue(receipt.contains("Order: ORD-6"));
+        assertTrue(receipt.contains("Discount: £13.00"));
+        assertTrue(receipt.contains("Delivery: £0.00"));
+        assertTrue(receipt.contains("Total: £87.00"));
+    }
+
 }
