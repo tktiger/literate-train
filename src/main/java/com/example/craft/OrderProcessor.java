@@ -7,7 +7,9 @@ import com.example.craft.domain.OrderItem;
 
 public class OrderProcessor {
 
-    public String process(Order order) {
+    record BasketValues(int orderTotal, int itemCount) {};
+
+    private void orderValidation(Order order) {
         if (order == null) {
             throw new IllegalArgumentException("Order must not be null");
         }
@@ -33,7 +35,9 @@ public class OrderProcessor {
         if (customer.getType() == null) {
             throw new IllegalArgumentException("Customer type is required");
         }
+    }
 
+    private BasketValues validateItem_calculateTotals(Order order) {
         int subtotal = 0;
         int itemCount = 0;
 
@@ -54,6 +58,11 @@ public class OrderProcessor {
             itemCount = itemCount + item.getQuantity();
         }
 
+        return new BasketValues(subtotal, itemCount);
+        
+    }
+
+    private int calculateDiscount(Order order, Customer customer, int subtotal, int itemCount) {
         int discount = 0;
 
         if (customer.getType() == CustomerType.STUDENT) {
@@ -89,6 +98,10 @@ public class OrderProcessor {
             discount = subtotal;
         }
 
+        return discount;
+    }
+
+    private int calculateDelivery(Order order, Customer customer, int subtotal) {
         int deliveryFee = 0;
 
         if (order.getDeliveryType().equalsIgnoreCase("STANDARD")) {
@@ -119,6 +132,10 @@ public class OrderProcessor {
             throw new IllegalArgumentException("Unknown delivery type: " + order.getDeliveryType());
         }
 
+        return deliveryFee;
+    }
+
+    private int calculateTotal(Order order, Customer customer, int subtotal, int discount, int deliveryFee) {
         int total = subtotal - discount + deliveryFee;
 
         if (total <= 0) {
@@ -147,6 +164,10 @@ public class OrderProcessor {
             throw new IllegalArgumentException("Unknown payment type: " + order.getPaymentType());
         }
 
+        return total;
+    }
+
+    private String generateReceipt(Order order, Customer customer, int total, int subtotal, int discount, int deliveryFee) {
         System.out.println("Saving order " + order.getOrderId());
         System.out.println("Saving order " + order.getOrderId() + " for customer " + customer.getName());
 
@@ -172,8 +193,29 @@ public class OrderProcessor {
                 + "Delivery: £" + formatPounds(deliveryFee) + "\n"
                 + "Total: £" + formatPounds(total) + "\n";
 
+        return receipt;
+    }
+
+    public String process(Order order) {
+        
+        //Validate the order:
+        orderValidation(order);
+
+        //Validate order items and calculate the order total and item count
+        BasketValues basket = validateItem_calculateTotals(order);
+        int subtotal = basket.orderTotal;
+        
+        int discount = calculateDiscount(order, order.getCustomer() , basket.orderTotal, basket.itemCount);
+        int deliveryFee = calculateDelivery(order, order.getCustomer(), basket.orderTotal);
+
+        int total = calculateTotal(order, order.getCustomer(), basket.orderTotal, discount, deliveryFee);
+        
+        String receipt = generateReceipt(order, order.getCustomer(), total, subtotal, discount, deliveryFee);
         System.out.println(receipt);
         return receipt;
+        //Customer customer = order.getCustomer(); //TODO get rid of this
+
+        
     }
 
     private String formatPounds(int pence) {
