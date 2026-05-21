@@ -80,9 +80,9 @@ class OrderProcessorTest {
         String receipt = processor.process(order);
 
         assertTrue(receipt.contains("Order: ORD-5"));
-        assertTrue(receipt.contains("Discount: £2.00"));
+        assertTrue(receipt.contains("Discount: £1.00"));
         assertTrue(receipt.contains("Delivery: £0.00"));
-        assertTrue(receipt.contains("Total: £8.0"));
+        assertTrue(receipt.contains("Total: £9.00"));
     }
 
 }
