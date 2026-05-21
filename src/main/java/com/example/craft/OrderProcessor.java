@@ -7,7 +7,7 @@ import com.example.craft.domain.OrderItem;
 
 public class OrderProcessor {
 
-    private record BasketValues(int orderTotal, int itemCount) {};
+    private record BasketValues(int orderTotal, int itemCount) {}
 
     private void orderValidation(Order order) {
         if (order == null) {
