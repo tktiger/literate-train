@@ -25,4 +25,64 @@ class OrderProcessorTest {
         assertTrue(receipt.contains("Delivery: £3.99"));
         assertTrue(receipt.contains("Total: £12.49"));
     }
+
+    @Test
+    void staff_customer_gets_discount_and_receipt_contains_total() {
+        Customer customer = new Customer("Tim", "tim.kay@email.com", "07777777777", CustomerType.STAFF);
+        Order order = new Order("ORD-2", customer, "STANDARD", "CARD");
+        order.addItem(new OrderItem("Book", 1, 1000));
+
+        String receipt = processor.process(order);
+
+        assertTrue(receipt.contains("Order: ORD-2"));
+        assertTrue(receipt.contains("Discount: £2.00"));
+        assertTrue(receipt.contains("Delivery: £3.99"));
+        assertTrue(receipt.contains("Total: £11.99"));
+    }
+
+    @Test
+    void delivery_free_when_subtotal_over_5000() {
+        Customer customer = new Customer("Same", "sam.kay@email.com", "07777777777", CustomerType.STUDENT);
+        Order order = new Order("ORD-3", customer, "STANDARD", "CARD");
+        order.addItem(new OrderItem("Book", 10, 1000));
+
+        String receipt = processor.process(order);
+
+        assertTrue(receipt.contains("Order: ORD-3"));
+        assertTrue(receipt.contains("Delivery: £0.00"));
+    }
+    
+    @Test
+    void throw_exception_on_illegal_delivery_type() {
+        Customer customer = new Customer("Simon", "simon.kay@email.com", "07777777777", CustomerType.PREMIUM);
+        Order order = new Order("ORD-4", customer, "ENHANCED", "CARD");
+        order.addItem(new OrderItem("Book", 1, 1000));
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            processor.process(order);
+        });
+    }
+
+    @Test
+    void throw_exception_on_empty_order() {
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            processor.process(null);
+        });
+    }
+
+    @Test
+    void delivery_type_collection_has_no_delivery_fee() {
+        Customer customer = new Customer("Simon", "simon.kay@email.com", "07777777777", CustomerType.PREMIUM);
+        Order order = new Order("ORD-5", customer, "COLLECTION", "CARD");
+        order.addItem(new OrderItem("Book", 1, 1000));
+
+        String receipt = processor.process(order);
+
+        assertTrue(receipt.contains("Order: ORD-5"));
+        assertTrue(receipt.contains("Discount: £2.00"));
+        assertTrue(receipt.contains("Delivery: £0.00"));
+        assertTrue(receipt.contains("Total: £8.0"));
+    }
+
 }
