@@ -7,7 +7,7 @@ import com.example.craft.domain.OrderItem;
 
 public class OrderProcessor {
 
-    record BasketValues(int orderTotal, int itemCount) {};
+    private record BasketValues(int orderTotal, int itemCount) {};
 
     private void orderValidation(Order order) {
         if (order == null) {
@@ -37,7 +37,7 @@ public class OrderProcessor {
         }
     }
 
-    private BasketValues validateItem_calculateTotals(Order order) {
+    private BasketValues validateItemsAndTotals(Order order) {
         int subtotal = 0;
         int itemCount = 0;
 
@@ -62,7 +62,7 @@ public class OrderProcessor {
         
     }
 
-    private int calculateDiscount(Order order, Customer customer, int subtotal, int itemCount) {
+    private int calculateDiscount(Customer customer, int subtotal, int itemCount) {
         int discount = 0;
 
         if (customer.getType() == CustomerType.STUDENT) {
@@ -184,7 +184,7 @@ public class OrderProcessor {
             System.out.println("Sending premium customer follow-up email");
         }
 
-        String receipt = "Receipt\n"
+        return "Receipt\n"
                 + "-------\n"
                 + "Order: " + order.getOrderId() + "\n"
                 + "Customer: " + customer.getName() + "\n"
@@ -192,8 +192,6 @@ public class OrderProcessor {
                 + "Discount: £" + formatPounds(discount) + "\n"
                 + "Delivery: £" + formatPounds(deliveryFee) + "\n"
                 + "Total: £" + formatPounds(total) + "\n";
-
-        return receipt;
     }
 
     public String process(Order order) {
@@ -202,10 +200,10 @@ public class OrderProcessor {
         orderValidation(order);
 
         //Validate order items and calculate the order total and item count
-        BasketValues basket = validateItem_calculateTotals(order);
+        BasketValues basket = validateItemsAndTotals(order);
         int subtotal = basket.orderTotal;
         
-        int discount = calculateDiscount(order, order.getCustomer() , basket.orderTotal, basket.itemCount);
+        int discount = calculateDiscount(order.getCustomer() , basket.orderTotal, basket.itemCount);
         int deliveryFee = calculateDelivery(order, order.getCustomer(), basket.orderTotal);
 
         int total = calculateTotal(order, order.getCustomer(), basket.orderTotal, discount, deliveryFee);
@@ -213,7 +211,6 @@ public class OrderProcessor {
         String receipt = generateReceipt(order, order.getCustomer(), total, subtotal, discount, deliveryFee);
         System.out.println(receipt);
         return receipt;
-        //Customer customer = order.getCustomer(); //TODO get rid of this
 
         
     }
