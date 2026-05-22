@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.example.craft.OrderProcessorTest" time="0.294" tests="7" errors="0" skipped="0" failures="0">
+  <properties>
+    <property name="java.specification.version" value="21"/>
+    <property name="sun.jnu.encoding" value="UTF-8"/>
+    <property name="java.class.path" value="/home/ubuntu/probable-octo-broccoli/target/test-classes:/home/ubuntu/probable-octo-broccoli/target/classes:/home/ubuntu/.m2/repository/org/junit/jupiter/junit-jupiter/5.10.2/junit-jupiter-5.10.2.jar:/home/ubuntu/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.10.2/junit-jupiter-api-5.10.2.jar:/home/ubuntu/.m2/repository/org/opentest4j/opentest4j/1.3.0/opentest4j-1.3.0.jar:/home/ubuntu/.m2/repository/org/junit/platform/junit-platform-commons/1.10.2/junit-platform-commons-1.10.2.jar:/home/ubuntu/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/home/ubuntu/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.10.2/junit-jupiter-params-5.10.2.jar:/home/ubuntu/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.10.2/junit-jupiter-engine-5.10.2.jar:/home/ubuntu/.m2/repository/org/junit/platform/junit-platform-engine/1.10.2/junit-platform-engine-1.10.2.jar:/home/ubuntu/.m2/repository/org/mockito/mockito-core/5.12.0/mockito-core-5.12.0.jar:/home/ubuntu/.m2/repository/net/bytebuddy/byte-buddy/1.14.15/byte-buddy-1.14.15.jar:/home/ubuntu/.m2/repository/net/bytebuddy/byte-buddy-agent/1.14.15/byte-buddy-agent-1.14.15.jar:/home/ubuntu/.m2/repository/org/objenesis/objenesis/3.3/objenesis-3.3.jar:/home/ubuntu/.m2/repository/org/mockito/mockito-junit-jupiter/5.12.0/mockito-junit-jupiter-5.12.0.jar:"/>
+    <property name="java.vm.vendor" value="Ubuntu"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="java.vendor.url" value="https://ubuntu.com/"/>
+    <property name="os.name" value="Linux"/>
+    <property name="java.vm.specification.version" value="21"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="sun.boot.library.path" value="/usr/lib/jvm/java-21-openjdk-amd64/lib"/>
+    <property name="sun.java.command" value="/home/ubuntu/probable-octo-broccoli/target/surefire/surefirebooter-20260522101509386_3.jar /home/ubuntu/probable-octo-broccoli/target/surefire 2026-05-22T10-15-09_238-jvmRun1 surefire-20260522101509386_1tmp surefire_0-20260522101509386_2tmp"/>
+    <property name="jdk.debug" value="release"/>
+    <property name="surefire.test.class.path" value="/home/ubuntu/probable-octo-broccoli/target/test-classes:/home/ubuntu/probable-octo-broccoli/target/classes:/home/ubuntu/.m2/repository/org/junit/jupiter/junit-jupiter/5.10.2/junit-jupiter-5.10.2.jar:/home/ubuntu/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.10.2/junit-jupiter-api-5.10.2.jar:/home/ubuntu/.m2/repository/org/opentest4j/opentest4j/1.3.0/opentest4j-1.3.0.jar:/home/ubuntu/.m2/repository/org/junit/platform/junit-platform-commons/1.10.2/junit-platform-commons-1.10.2.jar:/home/ubuntu/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/home/ubuntu/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.10.2/junit-jupiter-params-5.10.2.jar:/home/ubuntu/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.10.2/junit-jupiter-engine-5.10.2.jar:/home/ubuntu/.m2/repository/org/junit/platform/junit-platform-engine/1.10.2/junit-platform-engine-1.10.2.jar:/home/ubuntu/.m2/repository/org/mockito/mockito-core/5.12.0/mockito-core-5.12.0.jar:/home/ubuntu/.m2/repository/net/bytebuddy/byte-buddy/1.14.15/byte-buddy-1.14.15.jar:/home/ubuntu/.m2/repository/net/bytebuddy/byte-buddy-agent/1.14.15/byte-buddy-agent-1.14.15.jar:/home/ubuntu/.m2/repository/org/objenesis/objenesis/3.3/objenesis-3.3.jar:/home/ubuntu/.m2/repository/org/mockito/mockito-junit-jupiter/5.12.0/mockito-junit-jupiter-5.12.0.jar:"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="/home/ubuntu"/>
+    <property name="user.language" value="en"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.version.date" value="2026-01-20"/>
+    <property name="java.home" value="/usr/lib/jvm/java-21-openjdk-amd64"/>
+    <property name="file.separator" value="/"/>
+    <property name="basedir" value="/home/ubuntu/probable-octo-broccoli"/>
+    <property name="java.vm.compressedOopsMode" value="32-bit"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="surefire.real.class.path" value="/home/ubuntu/probable-octo-broccoli/target/surefire/surefirebooter-20260522101509386_3.jar"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="java.runtime.version" value="21.0.10+7-Ubuntu-124.04"/>
+    <property name="user.name" value="ubuntu"/>
+    <property name="stdout.encoding" value="UTF-8"/>
+    <property name="path.separator" value=":"/>
+    <property name="os.version" value="6.17.0-1013-aws"/>
+    <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
+    <property name="localRepository" value="/home/ubuntu/.m2/repository"/>
+    <property name="java.vendor.url.bug" value="https://bugs.launchpad.net/ubuntu/+source/openjdk-21"/>
+    <property name="java.io.tmpdir" value="/tmp"/>
+    <property name="java.version" value="21.0.10"/>
+    <property name="user.dir" value="/home/ubuntu/probable-octo-broccoli"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="native.encoding" value="UTF-8"/>
+    <property name="java.library.path" value="/usr/java/packages/lib:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib"/>
+    <property name="java.vm.info" value="mixed mode, sharing"/>
+    <property name="stderr.encoding" value="UTF-8"/>
+    <property name="java.vendor" value="Ubuntu"/>
+    <property name="java.vm.version" value="21.0.10+7-Ubuntu-124.04"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="java.class.version" value="65.0"/>
+  </properties>
+  <testcase name="throw_exception_on_illegal_delivery_type" classname="com.example.craft.OrderProcessorTest" time="0.084">
+    <system-out><![CDATA[Premium discount applied
+]]></system-out>
+  </testcase>
+  <testcase name="staff_customer_gets_discount_and_receipt_contains_total" classname="com.example.craft.OrderProcessorTest" time="0.06">
+    <system-out><![CDATA[Staff discount applied
+Delivery Strategy Cost = 399
+Taking card payment for £11.99
+Saving order ORD-2
+Saving order ORD-2 for customer Tim
+Sending email to tim.kay@email.com
+Dear Tim, your order has been processed.
+Order ORD-2 total was £11.99
+Sending SMS to 07777777777
+Order ORD-2 confirmed by SMS
+Receipt
+-------
+Order: ORD-2
+Customer: Tim
+Subtotal: £10.00
+Discount: £2.00
+Delivery: £3.99
+Total: £11.99
+
+]]></system-out>
+  </testcase>
+  <testcase name="delivery_type_collection_has_no_delivery_fee" classname="com.example.craft.OrderProcessorTest" time="0.009">
+    <system-out><![CDATA[Premium discount applied
+Delivery Strategy Cost = 0
+Taking card payment for £9.00
+Saving order ORD-5
+Saving order ORD-5 for customer Simon
+Sending email to simon.kay@email.com
+Dear Simon, your order has been processed.
+Order ORD-5 total was £9.00
+Sending SMS to 07777777777
+Order ORD-5 confirmed by SMS
+Receipt
+-------
+Order: ORD-5
+Customer: Simon
+Subtotal: £10.00
+Discount: £1.00
+Delivery: £0.00
+Total: £9.00
+
+]]></system-out>
+  </testcase>
+  <testcase name="delivery_free_when_subtotal_over_5000" classname="com.example.craft.OrderProcessorTest" time="0.006">
+    <system-out><![CDATA[Student discount applied
+Delivery Strategy Cost = 0
+Taking card payment for £85.00
+Saving order ORD-3
+Saving order ORD-3 for customer Same
+Sending email to sam.kay@email.com
+Dear Same, your order has been processed.
+Order ORD-3 total was £85.00
+Sending SMS to 07777777777
+Order ORD-3 confirmed by SMS
+Receipt
+-------
+Order: ORD-3
+Customer: Same
+Subtotal: £100.00
+Discount: £15.00
+Delivery: £0.00
+Total: £85.00
+
+]]></system-out>
+  </testcase>
+  <testcase name="student_customer_gets_discount_and_receipt_contains_total" classname="com.example.craft.OrderProcessorTest" time="0.006">
+    <system-out><![CDATA[Student discount applied
+Delivery Strategy Cost = 399
+Taking PayPal payment for £12.49
+PayPal payment using test-like email address
+Saving order ORD-1
+Saving order ORD-1 for customer Ada
+Sending email to ada@example.com
+Dear Ada, your order has been processed.
+Order ORD-1 total was £12.49
+Sending SMS to 07123456789
+Order ORD-1 confirmed by SMS
+Receipt
+-------
+Order: ORD-1
+Customer: Ada
+Subtotal: £10.00
+Discount: £1.50
+Delivery: £3.99
+Total: £12.49
+
+]]></system-out>
+  </testcase>
+  <testcase name="throw_exception_on_empty_order" classname="com.example.craft.OrderProcessorTest" time="0.006"/>
+  <testcase name="premium_customer_gets_larger_discount_on_five_items_or_more" classname="com.example.craft.OrderProcessorTest" time="0.007">
+    <system-out><![CDATA[Premium discount applied
+Delivery Strategy Cost = 0
+Taking card payment for £87.00
+Saving order ORD-6
+Saving order ORD-6 for customer Simon
+Sending email to simon.kay@email.com
+Dear Simon, your order has been processed.
+Order ORD-6 total was £87.00
+Sending SMS to 07777777777
+Order ORD-6 confirmed by SMS
+Sending premium customer follow-up email
+Receipt
+-------
+Order: ORD-6
+Customer: Simon
+Subtotal: £100.00
+Discount: £13.00
+Delivery: £0.00
+Total: £87.00
+
+]]></system-out>
+  </testcase>
+</testsuite>

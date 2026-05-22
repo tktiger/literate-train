@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OrderProcessor.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">software-craft-starter</a> &gt; <a href="index.source.html" class="el_package">com.example.craft</a> &gt; <span class="el_source">OrderProcessor.java</span></div><h1>OrderProcessor.java</h1><pre class="source lang-java linenums">package com.example.craft;
+
+import com.example.craft.domain.Customer;
+import com.example.craft.domain.CustomerType;
+import com.example.craft.domain.Order;
+import com.example.craft.domain.OrderItem;
+import com.example.craft.delivery.*;
+import com.example.craft.payment.*;
+
+<span class="fc" id="L10">public class OrderProcessor {</span>
+
+<span class="fc" id="L12">    private record BasketValues(int orderTotal, int itemCount) {}</span>
+
+    private void orderValidation(Order order) {
+<span class="fc bfc" id="L15" title="All 2 branches covered.">        if (order == null) {</span>
+<span class="fc" id="L16">            throw new IllegalArgumentException(&quot;Order must not be null&quot;);</span>
+        }
+
+<span class="pc bpc" id="L19" title="1 of 2 branches missed.">        if (order.getCustomer() == null) {</span>
+<span class="nc" id="L20">            throw new IllegalArgumentException(&quot;Customer must not be null&quot;);</span>
+        }
+
+<span class="pc bpc" id="L23" title="1 of 2 branches missed.">        if (order.getItems().isEmpty()) {</span>
+<span class="nc" id="L24">            throw new IllegalArgumentException(&quot;Order must contain at least one item&quot;);</span>
+        }
+
+<span class="fc" id="L27">        Customer customer = order.getCustomer();</span>
+
+<span class="pc bpc" id="L29" title="2 of 4 branches missed.">        if (customer.getName() == null || customer.getName().trim().length() == 0) {</span>
+<span class="nc" id="L30">            throw new IllegalArgumentException(&quot;Customer name is invalid&quot;);</span>
+        }
+
+<span class="pc bpc" id="L33" title="2 of 4 branches missed.">        if (customer.getEmail() == null || !customer.getEmail().contains(&quot;@&quot;)) {</span>
+<span class="nc" id="L34">            throw new IllegalArgumentException(&quot;Customer email is invalid&quot;);</span>
+        }
+
+<span class="pc bpc" id="L37" title="1 of 2 branches missed.">        if (customer.getType() == null) {</span>
+<span class="nc" id="L38">            throw new IllegalArgumentException(&quot;Customer type is required&quot;);</span>
+        }
+<span class="fc" id="L40">    }</span>
+
+    private BasketValues validateItemsAndTotals(Order order) {
+<span class="fc" id="L43">        int subtotal = 0;</span>
+<span class="fc" id="L44">        int itemCount = 0;</span>
+
+<span class="fc bfc" id="L46" title="All 2 branches covered.">        for (OrderItem item : order.getItems()) {</span>
+<span class="pc bpc" id="L47" title="1 of 2 branches missed.">            if (item == null) {</span>
+<span class="nc" id="L48">                throw new IllegalArgumentException(&quot;Order item must not be null&quot;);</span>
+            }
+
+<span class="pc bpc" id="L51" title="1 of 2 branches missed.">            if (item.getQuantity() &lt;= 0) {</span>
+<span class="nc" id="L52">                throw new IllegalArgumentException(&quot;Item quantity must be positive&quot;);</span>
+            }
+
+<span class="pc bpc" id="L55" title="1 of 2 branches missed.">            if (item.getUnitPricePence() &lt;= 0) {</span>
+<span class="nc" id="L56">                throw new IllegalArgumentException(&quot;Item price must be positive&quot;);</span>
+            }
+
+<span class="fc" id="L59">            subtotal = subtotal + item.getQuantity() * item.getUnitPricePence();</span>
+<span class="fc" id="L60">            itemCount = itemCount + item.getQuantity();</span>
+<span class="fc" id="L61">        }</span>
+
+<span class="fc" id="L63">        return new BasketValues(subtotal, itemCount);</span>
+        
+    }
+
+    private int calculateDiscount(Customer customer, int subtotal, int itemCount) {
+<span class="fc" id="L68">        int discount = 0;</span>
+
+<span class="fc bfc" id="L70" title="All 2 branches covered.">        if (customer.getType() == CustomerType.STUDENT) {</span>
+<span class="fc" id="L71">            discount = (int) (subtotal * 0.15);</span>
+
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">            if (subtotal &gt; 10000) {</span>
+<span class="nc" id="L74">                discount = discount + 250;</span>
+            }
+
+<span class="fc" id="L77">            System.out.println(&quot;Student discount applied&quot;);</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">        } else if (customer.getType() == CustomerType.PREMIUM) {</span>
+<span class="fc" id="L79">            discount = (int) (subtotal * 0.10);</span>
+
+<span class="fc bfc" id="L81" title="All 2 branches covered.">            if (itemCount &gt; 5) {</span>
+<span class="fc" id="L82">                discount = discount + 300;</span>
+            }
+
+<span class="fc" id="L85">            System.out.println(&quot;Premium discount applied&quot;);</span>
+<span class="pc bpc" id="L86" title="1 of 2 branches missed.">        } else if (customer.getType() == CustomerType.STAFF) {</span>
+<span class="fc" id="L87">            discount = (int) (subtotal * 0.20);</span>
+
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">            if (subtotal &gt; 20000) {</span>
+<span class="nc" id="L90">                discount = discount + 500;</span>
+            }
+
+<span class="fc" id="L93">            System.out.println(&quot;Staff discount applied&quot;);</span>
+        } else {
+<span class="nc" id="L95">            discount = 0;</span>
+<span class="nc" id="L96">            System.out.println(&quot;No discount applied&quot;);</span>
+        }
+
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">        if (discount &gt; subtotal) {</span>
+<span class="nc" id="L100">            discount = subtotal;</span>
+        }
+
+<span class="fc" id="L103">        return discount;</span>
+    }
+
+    private int calculateDelivery(Order order, Customer customer, int subtotal) {
+
+<span class="fc" id="L108">        int deliveryFee = 0;</span>
+        
+<span class="fc" id="L110">        DeliveryStrategy newDel = DeliveryStrategyFactory.create(order.getDeliveryType());</span>
+<span class="fc" id="L111">        deliveryFee = newDel.calculateDelivery(order, subtotal);</span>
+<span class="fc" id="L112">        System.out.println(&quot;Delivery Strategy Cost = &quot; + deliveryFee);</span>
+
+<span class="fc" id="L114">        return deliveryFee;</span>
+    }
+
+    private int calculateTotal(Order order, Customer customer, int subtotal, int discount, int deliveryFee) {
+<span class="fc" id="L118">        int total = subtotal - discount + deliveryFee;</span>
+
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">        if (total &lt;= 0) {</span>
+<span class="nc" id="L121">            throw new IllegalStateException(&quot;Order total must be positive&quot;);</span>
+        }
+
+<span class="fc" id="L124">        PaymentStrategy newPay = PaymentStrategyFactory.create(order.getPaymentType());</span>
+<span class="fc" id="L125">        newPay.displayPaymentNotification(total, customer.getEmail());</span>
+
+
+        // if (order.getPaymentType().equalsIgnoreCase(&quot;CARD&quot;)) {
+        //     System.out.println(&quot;Taking card payment for £&quot; + formatPounds(total));
+
+        //     if (total &gt; 100000) {
+        //         System.out.println(&quot;Large card payment requires manual review&quot;);
+        //     }
+        // } else if (order.getPaymentType().equalsIgnoreCase(&quot;PAYPAL&quot;)) {
+        //     System.out.println(&quot;Taking PayPal payment for £&quot; + formatPounds(total));
+
+        //     if (customer.getEmail().endsWith(&quot;@example.com&quot;)) {
+        //         System.out.println(&quot;PayPal payment using test-like email address&quot;);
+        //     }
+        // } else if (order.getPaymentType().equalsIgnoreCase(&quot;BANK_TRANSFER&quot;)) {
+        //     System.out.println(&quot;Creating bank transfer request for £&quot; + formatPounds(total));
+
+        //     if (total &lt; 1000) {
+        //         System.out.println(&quot;Bank transfer for low value order may not be worth processing&quot;);
+        //     }
+        // } else {
+        //     throw new IllegalArgumentException(&quot;Unknown payment type: &quot; + order.getPaymentType());
+        // }
+
+<span class="fc" id="L150">        return total;</span>
+    }
+
+    private String generateReceipt(Order order, Customer customer, int total, int subtotal, int discount, int deliveryFee) {
+<span class="fc" id="L154">        System.out.println(&quot;Saving order &quot; + order.getOrderId());</span>
+<span class="fc" id="L155">        System.out.println(&quot;Saving order &quot; + order.getOrderId() + &quot; for customer &quot; + customer.getName());</span>
+
+<span class="fc" id="L157">        System.out.println(&quot;Sending email to &quot; + customer.getEmail());</span>
+<span class="fc" id="L158">        System.out.println(&quot;Dear &quot; + customer.getName() + &quot;, your order has been processed.&quot;);</span>
+<span class="fc" id="L159">        System.out.println(&quot;Order &quot; + order.getOrderId() + &quot; total was £&quot; + formatPounds(total));</span>
+
+<span class="pc bpc" id="L161" title="2 of 4 branches missed.">        if (customer.getPhoneNumber() != null &amp;&amp; customer.getPhoneNumber().startsWith(&quot;07&quot;)) {</span>
+<span class="fc" id="L162">            System.out.println(&quot;Sending SMS to &quot; + customer.getPhoneNumber());</span>
+<span class="fc" id="L163">            System.out.println(&quot;Order &quot; + order.getOrderId() + &quot; confirmed by SMS&quot;);</span>
+        }
+
+<span class="fc bfc" id="L166" title="All 4 branches covered.">        if (customer.getType() == CustomerType.PREMIUM &amp;&amp; total &gt; 5000) {</span>
+<span class="fc" id="L167">            System.out.println(&quot;Sending premium customer follow-up email&quot;);</span>
+        }
+
+<span class="fc" id="L170">        return &quot;Receipt\n&quot;</span>
+                + &quot;-------\n&quot;
+<span class="fc" id="L172">                + &quot;Order: &quot; + order.getOrderId() + &quot;\n&quot;</span>
+<span class="fc" id="L173">                + &quot;Customer: &quot; + customer.getName() + &quot;\n&quot;</span>
+<span class="fc" id="L174">                + &quot;Subtotal: £&quot; + formatPounds(subtotal) + &quot;\n&quot;</span>
+<span class="fc" id="L175">                + &quot;Discount: £&quot; + formatPounds(discount) + &quot;\n&quot;</span>
+<span class="fc" id="L176">                + &quot;Delivery: £&quot; + formatPounds(deliveryFee) + &quot;\n&quot;</span>
+<span class="fc" id="L177">                + &quot;Total: £&quot; + formatPounds(total) + &quot;\n&quot;;</span>
+    }
+
+    public String process(Order order) {
+        
+        //Validate the order:
+<span class="fc" id="L183">        orderValidation(order);</span>
+
+        //Validate order items and calculate the order total and item count
+<span class="fc" id="L186">        BasketValues basket = validateItemsAndTotals(order);</span>
+<span class="fc" id="L187">        int subtotal = basket.orderTotal;</span>
+        
+<span class="fc" id="L189">        int discount = calculateDiscount(order.getCustomer() , basket.orderTotal, basket.itemCount);</span>
+<span class="fc" id="L190">        int deliveryFee = calculateDelivery(order, order.getCustomer(), basket.orderTotal);</span>
+
+<span class="fc" id="L192">        int total = calculateTotal(order, order.getCustomer(), basket.orderTotal, discount, deliveryFee);</span>
+        
+<span class="fc" id="L194">        String receipt = generateReceipt(order, order.getCustomer(), total, subtotal, discount, deliveryFee);</span>
+<span class="fc" id="L195">        System.out.println(receipt);</span>
+<span class="fc" id="L196">        return receipt;</span>
+
+        
+    }
+
+    private String formatPounds(int pence) {
+<span class="fc" id="L202">        return String.format(&quot;%.2f&quot;, pence / 100.0);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

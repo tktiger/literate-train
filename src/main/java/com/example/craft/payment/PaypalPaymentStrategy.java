@@ -1,7 +1,6 @@
 package com.example.craft.payment;
 
 public class PaypalPaymentStrategy implements PaymentStrategy {
-    private final int TOTAL_THRESHOLD = 100000;
 
     public void displayPaymentNotification(int total, String email) {
         System.out.println("Taking PayPal payment for £" + formatPounds(total));

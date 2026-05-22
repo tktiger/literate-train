@@ -1,12 +1,12 @@
 package com.example.craft.payment;
 
 public class CardPaymentStrategy implements PaymentStrategy {
-    private final int TOTAL_THRESHOLD = 100000;
+    private final static int TOTAL-THRESHOLD = 100000;
 
     public void displayPaymentNotification(int total, String email) {
         System.out.println("Taking card payment for £" + formatPounds(total));
 
-        if (total > TOTAL_THRESHOLD) {
+        if (total > TOTAL-THRESHOLD) {
             System.out.println("Large card payment requires manual review");
         }
     }
