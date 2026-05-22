@@ -4,13 +4,13 @@ import com.example.craft.domain.Order;
 import com.example.craft.domain.Customer;
 
 public class StandardDeliveryStrategy implements DeliveryStrategy {
-    private final static int STANDARD-DELIVERY-FEE = 399;
-    private final static int STANDARD-FREE-THRESHOLD = 5000;
+    private final static int STANDARDDELIVERYFEE = 399;
+    private final static int STANDARDFREETHRESHOLD = 5000;
 
     public int calculateDelivery(Order order, int subtotal) {
-        int deliveryFee = STANDARD-DELIVERY-FEE;
+        int deliveryFee = STANDARDDELIVERYFEE;
 
-        if (subtotal > STANDARD-FREE-THRESHOLD) {
+        if (subtotal > STANDARDFREETHRESHOLD) {
             deliveryFee = 0;
         }
 

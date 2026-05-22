@@ -1,12 +1,12 @@
 package com.example.craft.payment;
 
 public class BankTransferPaymentStrategy implements PaymentStrategy {
-    private final static int TOTAL-THRESHOLD = 1000;
+    private final static int TOTALTHRESHOLD = 1000;
 
     public void displayPaymentNotification(int total, String email) {
         System.out.println("Creating bank transfer request for £" + formatPounds(total));
 
-        if (total < TOTAL-THRESHOLD) {
+        if (total < TOTALTHRESHOLD) {
             System.out.println("Bank transfer for low value order may not be worth processing");
         }
     }

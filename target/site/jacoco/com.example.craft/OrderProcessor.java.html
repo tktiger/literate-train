@@ -124,82 +124,59 @@ import com.example.craft.payment.*;
 <span class="fc" id="L124">        PaymentStrategy newPay = PaymentStrategyFactory.create(order.getPaymentType());</span>
 <span class="fc" id="L125">        newPay.displayPaymentNotification(total, customer.getEmail());</span>
 
-
-        // if (order.getPaymentType().equalsIgnoreCase(&quot;CARD&quot;)) {
-        //     System.out.println(&quot;Taking card payment for £&quot; + formatPounds(total));
-
-        //     if (total &gt; 100000) {
-        //         System.out.println(&quot;Large card payment requires manual review&quot;);
-        //     }
-        // } else if (order.getPaymentType().equalsIgnoreCase(&quot;PAYPAL&quot;)) {
-        //     System.out.println(&quot;Taking PayPal payment for £&quot; + formatPounds(total));
-
-        //     if (customer.getEmail().endsWith(&quot;@example.com&quot;)) {
-        //         System.out.println(&quot;PayPal payment using test-like email address&quot;);
-        //     }
-        // } else if (order.getPaymentType().equalsIgnoreCase(&quot;BANK_TRANSFER&quot;)) {
-        //     System.out.println(&quot;Creating bank transfer request for £&quot; + formatPounds(total));
-
-        //     if (total &lt; 1000) {
-        //         System.out.println(&quot;Bank transfer for low value order may not be worth processing&quot;);
-        //     }
-        // } else {
-        //     throw new IllegalArgumentException(&quot;Unknown payment type: &quot; + order.getPaymentType());
-        // }
-
-<span class="fc" id="L150">        return total;</span>
+<span class="fc" id="L127">        return total;</span>
     }
 
     private String generateReceipt(Order order, Customer customer, int total, int subtotal, int discount, int deliveryFee) {
-<span class="fc" id="L154">        System.out.println(&quot;Saving order &quot; + order.getOrderId());</span>
-<span class="fc" id="L155">        System.out.println(&quot;Saving order &quot; + order.getOrderId() + &quot; for customer &quot; + customer.getName());</span>
+<span class="fc" id="L131">        System.out.println(&quot;Saving order &quot; + order.getOrderId());</span>
+<span class="fc" id="L132">        System.out.println(&quot;Saving order &quot; + order.getOrderId() + &quot; for customer &quot; + customer.getName());</span>
 
-<span class="fc" id="L157">        System.out.println(&quot;Sending email to &quot; + customer.getEmail());</span>
-<span class="fc" id="L158">        System.out.println(&quot;Dear &quot; + customer.getName() + &quot;, your order has been processed.&quot;);</span>
-<span class="fc" id="L159">        System.out.println(&quot;Order &quot; + order.getOrderId() + &quot; total was £&quot; + formatPounds(total));</span>
+<span class="fc" id="L134">        System.out.println(&quot;Sending email to &quot; + customer.getEmail());</span>
+<span class="fc" id="L135">        System.out.println(&quot;Dear &quot; + customer.getName() + &quot;, your order has been processed.&quot;);</span>
+<span class="fc" id="L136">        System.out.println(&quot;Order &quot; + order.getOrderId() + &quot; total was £&quot; + formatPounds(total));</span>
 
-<span class="pc bpc" id="L161" title="2 of 4 branches missed.">        if (customer.getPhoneNumber() != null &amp;&amp; customer.getPhoneNumber().startsWith(&quot;07&quot;)) {</span>
-<span class="fc" id="L162">            System.out.println(&quot;Sending SMS to &quot; + customer.getPhoneNumber());</span>
-<span class="fc" id="L163">            System.out.println(&quot;Order &quot; + order.getOrderId() + &quot; confirmed by SMS&quot;);</span>
+<span class="pc bpc" id="L138" title="2 of 4 branches missed.">        if (customer.getPhoneNumber() != null &amp;&amp; customer.getPhoneNumber().startsWith(&quot;07&quot;)) {</span>
+<span class="fc" id="L139">            System.out.println(&quot;Sending SMS to &quot; + customer.getPhoneNumber());</span>
+<span class="fc" id="L140">            System.out.println(&quot;Order &quot; + order.getOrderId() + &quot; confirmed by SMS&quot;);</span>
         }
 
-<span class="fc bfc" id="L166" title="All 4 branches covered.">        if (customer.getType() == CustomerType.PREMIUM &amp;&amp; total &gt; 5000) {</span>
-<span class="fc" id="L167">            System.out.println(&quot;Sending premium customer follow-up email&quot;);</span>
+<span class="fc bfc" id="L143" title="All 4 branches covered.">        if (customer.getType() == CustomerType.PREMIUM &amp;&amp; total &gt; 5000) {</span>
+<span class="fc" id="L144">            System.out.println(&quot;Sending premium customer follow-up email&quot;);</span>
         }
 
-<span class="fc" id="L170">        return &quot;Receipt\n&quot;</span>
+<span class="fc" id="L147">        return &quot;Receipt\n&quot;</span>
                 + &quot;-------\n&quot;
-<span class="fc" id="L172">                + &quot;Order: &quot; + order.getOrderId() + &quot;\n&quot;</span>
-<span class="fc" id="L173">                + &quot;Customer: &quot; + customer.getName() + &quot;\n&quot;</span>
-<span class="fc" id="L174">                + &quot;Subtotal: £&quot; + formatPounds(subtotal) + &quot;\n&quot;</span>
-<span class="fc" id="L175">                + &quot;Discount: £&quot; + formatPounds(discount) + &quot;\n&quot;</span>
-<span class="fc" id="L176">                + &quot;Delivery: £&quot; + formatPounds(deliveryFee) + &quot;\n&quot;</span>
-<span class="fc" id="L177">                + &quot;Total: £&quot; + formatPounds(total) + &quot;\n&quot;;</span>
+<span class="fc" id="L149">                + &quot;Order: &quot; + order.getOrderId() + &quot;\n&quot;</span>
+<span class="fc" id="L150">                + &quot;Customer: &quot; + customer.getName() + &quot;\n&quot;</span>
+<span class="fc" id="L151">                + &quot;Subtotal: £&quot; + formatPounds(subtotal) + &quot;\n&quot;</span>
+<span class="fc" id="L152">                + &quot;Discount: £&quot; + formatPounds(discount) + &quot;\n&quot;</span>
+<span class="fc" id="L153">                + &quot;Delivery: £&quot; + formatPounds(deliveryFee) + &quot;\n&quot;</span>
+<span class="fc" id="L154">                + &quot;Total: £&quot; + formatPounds(total) + &quot;\n&quot;;</span>
     }
 
     public String process(Order order) {
         
         //Validate the order:
-<span class="fc" id="L183">        orderValidation(order);</span>
+<span class="fc" id="L160">        orderValidation(order);</span>
 
         //Validate order items and calculate the order total and item count
-<span class="fc" id="L186">        BasketValues basket = validateItemsAndTotals(order);</span>
-<span class="fc" id="L187">        int subtotal = basket.orderTotal;</span>
+<span class="fc" id="L163">        BasketValues basket = validateItemsAndTotals(order);</span>
+<span class="fc" id="L164">        int subtotal = basket.orderTotal;</span>
         
-<span class="fc" id="L189">        int discount = calculateDiscount(order.getCustomer() , basket.orderTotal, basket.itemCount);</span>
-<span class="fc" id="L190">        int deliveryFee = calculateDelivery(order, order.getCustomer(), basket.orderTotal);</span>
+<span class="fc" id="L166">        int discount = calculateDiscount(order.getCustomer() , basket.orderTotal, basket.itemCount);</span>
+<span class="fc" id="L167">        int deliveryFee = calculateDelivery(order, order.getCustomer(), basket.orderTotal);</span>
 
-<span class="fc" id="L192">        int total = calculateTotal(order, order.getCustomer(), basket.orderTotal, discount, deliveryFee);</span>
+<span class="fc" id="L169">        int total = calculateTotal(order, order.getCustomer(), basket.orderTotal, discount, deliveryFee);</span>
         
-<span class="fc" id="L194">        String receipt = generateReceipt(order, order.getCustomer(), total, subtotal, discount, deliveryFee);</span>
-<span class="fc" id="L195">        System.out.println(receipt);</span>
-<span class="fc" id="L196">        return receipt;</span>
+<span class="fc" id="L171">        String receipt = generateReceipt(order, order.getCustomer(), total, subtotal, discount, deliveryFee);</span>
+<span class="fc" id="L172">        System.out.println(receipt);</span>
+<span class="fc" id="L173">        return receipt;</span>
 
         
     }
 
     private String formatPounds(int pence) {
-<span class="fc" id="L202">        return String.format(&quot;%.2f&quot;, pence / 100.0);</span>
+<span class="fc" id="L179">        return String.format(&quot;%.2f&quot;, pence / 100.0);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
