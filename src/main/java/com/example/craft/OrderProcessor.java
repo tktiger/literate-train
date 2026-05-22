@@ -4,6 +4,8 @@ import com.example.craft.domain.Customer;
 import com.example.craft.domain.CustomerType;
 import com.example.craft.domain.Order;
 import com.example.craft.domain.OrderItem;
+import com.example.craft.delivery.*;
+import com.example.craft.payment.*;
 
 public class OrderProcessor {
 
@@ -102,35 +104,12 @@ public class OrderProcessor {
     }
 
     private int calculateDelivery(Order order, Customer customer, int subtotal) {
+
         int deliveryFee = 0;
-
-        if (order.getDeliveryType().equalsIgnoreCase("STANDARD")) {
-            deliveryFee = 399;
-
-            if (subtotal > 5000) {
-                deliveryFee = 0;
-            }
-
-            System.out.println("Standard delivery selected");
-        } else if (order.getDeliveryType().equalsIgnoreCase("NEXT_DAY")) {
-            deliveryFee = 799;
-
-            if (subtotal > 15000) {
-                deliveryFee = 499;
-            }
-
-            System.out.println("Next day delivery selected");
-        } else if (order.getDeliveryType().equalsIgnoreCase("COLLECTION")) {
-            deliveryFee = 0;
-
-            if (customer.getPhoneNumber() == null) {
-                System.out.println("Collection selected but no phone number was provided");
-            }
-
-            System.out.println("Collection selected");
-        } else {
-            throw new IllegalArgumentException("Unknown delivery type: " + order.getDeliveryType());
-        }
+        
+        DeliveryStrategy newDel = DeliveryStrategyFactory.create(order.getDeliveryType());
+        deliveryFee = newDel.calculateDelivery(order, subtotal);
+        System.out.println("Delivery Strategy Cost = " + deliveryFee);
 
         return deliveryFee;
     }
@@ -142,27 +121,8 @@ public class OrderProcessor {
             throw new IllegalStateException("Order total must be positive");
         }
 
-        if (order.getPaymentType().equalsIgnoreCase("CARD")) {
-            System.out.println("Taking card payment for £" + formatPounds(total));
-
-            if (total > 100000) {
-                System.out.println("Large card payment requires manual review");
-            }
-        } else if (order.getPaymentType().equalsIgnoreCase("PAYPAL")) {
-            System.out.println("Taking PayPal payment for £" + formatPounds(total));
-
-            if (customer.getEmail().endsWith("@example.com")) {
-                System.out.println("PayPal payment using test-like email address");
-            }
-        } else if (order.getPaymentType().equalsIgnoreCase("BANK_TRANSFER")) {
-            System.out.println("Creating bank transfer request for £" + formatPounds(total));
-
-            if (total < 1000) {
-                System.out.println("Bank transfer for low value order may not be worth processing");
-            }
-        } else {
-            throw new IllegalArgumentException("Unknown payment type: " + order.getPaymentType());
-        }
+        PaymentStrategy newPay = PaymentStrategyFactory.create(order.getPaymentType());
+        newPay.displayPaymentNotification(total, customer.getEmail());
 
         return total;
     }
@@ -217,9 +177,5 @@ public class OrderProcessor {
 
     private String formatPounds(int pence) {
         return String.format("%.2f", pence / 100.0);
-    }
-
-    private boolean isLargeOrder(int total) {
-        return total > 50000;
     }
 }

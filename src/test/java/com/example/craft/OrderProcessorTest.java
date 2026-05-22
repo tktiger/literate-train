@@ -15,7 +15,7 @@ class OrderProcessorTest {
     @Test
     void student_customer_gets_discount_and_receipt_contains_total() {
         Customer customer = new Customer("Ada", "ada@example.com", "07123456789", CustomerType.STUDENT);
-        Order order = new Order("ORD-1", customer, "STANDARD", "CARD");
+        Order order = new Order("ORD-1", customer, "STANDARD", "PAYPAL");
         order.addItem(new OrderItem("Book", 1, 1000));
 
         String receipt = processor.process(order);
